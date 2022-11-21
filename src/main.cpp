@@ -28,9 +28,9 @@
 
 /// @brief Build parameters
 #define _HUB_
-#define _SECURE_
+// #define _SECURE_
 // #define _RESET_NVM_
-//      #define _RETAIN_MSG_
+// #define _RETAIN_MSG_
 
 /// @brief Build configuration
 enum deviceType

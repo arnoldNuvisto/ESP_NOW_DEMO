@@ -1,0 +1,32 @@
+This project demonstrates ESP-NOW running a network of ESP-32 development boards.
+
+Some of the project's features:
+
+- Auto-Discovery & Auto-Pairing
+- Auto-Recovery on re-start
+- Connects up to 20 devices
+- Allows for two-way communication
+- Optional key-encrypted messages
+- Does not require access to a WiFi router 
+- Does not use BlueTooth
+- Utilizes task scheduling to control operations
+- Allows for extensive device configuration & management
+
+How to run this demo:
+
+- Download the repo & open it with VSCode & PlatformIO
+- Connect & flash the first ESP32 module
+- Disconnect & set aside this module - it will act as a HUB
+- Goto line #30 in the code and comment out "#define _HUB_"
+- Connect & flash the second ESP32 module
+- Disconnect & set aside this module - it will act as a NODE
+- Repeat the last 2 steps for up to 19 additional NODEs
+- Power-up the HUB & open a serial monitor
+- One-by-one, power-up & open a serial monitor for each NODE
+- View the dialogue between devices in the serial monitors
+
+Also:
+
+- Uncommenting "#define _SECURE_" will force key encryption of messages*
+- Uncommenting "#define _RESET_NVM" will clear out non-volatile memory
+- Uncommenting "#define _RETAIN_MSG_" well set a retain flag on messages (used with MQTT)
