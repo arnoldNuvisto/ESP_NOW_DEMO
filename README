@@ -4,7 +4,7 @@ Some of the project's features:
 
 - Auto-Discovery & Auto-Pairing
 - Auto-Recovery on re-start
-- Connects up to 20 devices
+- Connects up to 20 devices*
 - Allows for two-way communication
 - Optional key-encrypted messages
 - Does not require access to a WiFi router 
@@ -21,7 +21,7 @@ How to run this demo:
 - Connect & flash the second ESP32 module
 - Disconnect & set aside this module - it will act as a NODE
 - Repeat the last 2 steps for up to 19 additional NODEs
-- Power-up the HUB & open a serial monitor
+- Power-up & open a serial monitor for the HUB
 - One-by-one, power-up & open a serial monitor for each NODE
 - View the dialogue between devices in the serial monitors
 
@@ -30,3 +30,5 @@ Also:
 - Uncommenting "#define _SECURE_" will force key encryption of messages*
 - Uncommenting "#define _RESET_NVM" will clear out non-volatile memory
 - Uncommenting "#define _RETAIN_MSG_" well set a retain flag on messages (used with MQTT)
+
+* Can connect up 6 devices when key-encryption is enabled.
