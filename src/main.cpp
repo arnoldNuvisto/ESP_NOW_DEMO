@@ -56,7 +56,7 @@ enum deviceMode
 
 #ifdef _HUB_
 #ifdef _SECURE_
-#define MAX_PEERS 4
+#define MAX_PEERS 6
 #else
 #define MAX_PEERS 20
 #endif
