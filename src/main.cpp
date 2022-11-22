@@ -506,7 +506,7 @@ void confirmPairing(uint8_t *senderMac, struct_message_t message)
   {
     _PL("ERROR: confirmPairing() -> sendMessage() failed");
 
-    thisDevice.device_MODE = NOT_PAIRED; // if NODE
+    thisDevice.device_MODE = NOT_PAIRED; 
 
     if (!forgetPeer(senderMac))
     {
