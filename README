@@ -2,15 +2,16 @@ This project demonstrates ESP-NOW running on a network of ESP-32 development boa
 
 Some of the project's features:
 
-- Auto-Discovery & Auto-Pairing
-- Auto-Recovery on re-start
-- Connects up to 20 devices*
-- Allows for two-way communication
-- Optional key-encrypted messages
-- Does not require access to a WiFi router 
-- Does not use BlueTooth
-- Utilizes task scheduling to control operations
-- Allows for extensive device configuration & management
+- Auto-discovery & Auto-pairing
+- Auto-recovery on re-start
+- Connect up to 20 devices*
+- Secure double-handshake pairing protocol
+- Two-way communication between devices
+- Optional key-encrypted messaging
+- WiFi router NOT required!
+- BlueTooth NOT required!
+- Uses task scheduling to control operations
+- Extensive device configuration & management
 
 How to run this demo:
 
@@ -23,7 +24,7 @@ How to run this demo:
 - Repeat the last 2 steps for up to 19 additional NODEs
 - Power-up & open a serial monitor for the HUB
 - One-by-one, power-up & open a serial monitor for each NODE
-- View the dialogue between devices in the serial monitors
+- View the communications between devices in the serial monitors
 
 Also:
 
