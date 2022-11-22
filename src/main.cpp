@@ -27,7 +27,7 @@
 #define _PX(a) SerialD.println(a, HEX)
 
 /// @brief Build parameters
-#define _HUB_
+//#define _HUB_
 // #define _SECURE_
 // #define _RESET_NVM_
 // #define _RETAIN_MSG_
@@ -638,8 +638,6 @@ void finalizePairing(uint8_t *senderMac, struct_message_t message)
 /// @brief Add & remove tasks from the task schedule
 void updateTaskRunner()
 {
-  _PL("START: updateTaskRunner()");
-
   if (thisDevice.device_TYPE == NODE)
   {
     requestPairing_TASK.disable();
