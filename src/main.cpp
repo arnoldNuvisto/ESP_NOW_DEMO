@@ -362,29 +362,25 @@ void initDevice()
 
     struct_device_t *peerList = (struct_device_t *)buffer;
 
-    if (thisDevice.device_PEERS > 0)
+    for (int i = 0; i < thisDevice.device_PEERS; i++) // loop thru the peerList[] array
     {
+      byte pairedMac[6];
 
-      for (int i = 0; i < thisDevice.device_PEERS; i++) // loop thru the peerList[] array
+      for (int j = 0; j < 6; j++) // Loop thru the device_MAC array for the given pairedDevice[i]
       {
-        byte pairedMac[6];
+        pairedDevice[i].device_MAC[j] = peerList[i].device_MAC[j];
 
-        for (int j = 0; j < 6; j++) // Loop thru the device_MAC array for the given pairedDevice[i]
-        {
-          pairedDevice[i].device_MAC[j] = peerList[i].device_MAC[j];
+        pairedMac[j] = pairedDevice[i].device_MAC[j];
+      }
 
-          pairedMac[j] = pairedDevice[i].device_MAC[j];
-        }
-
-        if (!rememberPeer(pairedMac, KEY_AUTH))
-        {
-          _PL("ERROR: initDevice() -> rememberPeer() failed");
-        }
+      if (!rememberPeer(pairedMac, KEY_AUTH))
+      {
+        _PL("ERROR: initDevice() -> rememberPeer() failed");
       }
     }
-
-    prefs.end();
   }
+  
+  prefs.end();
 }
 
 /// @brief Initialize task scheduling
