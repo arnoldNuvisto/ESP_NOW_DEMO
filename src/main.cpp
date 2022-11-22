@@ -144,6 +144,8 @@ esp_now_peer_num_t numPeers;
 uint8_t pairingRequestCount = 0;
 uint8_t maxPairingRequests = 5;
 
+bool firstPeer = false;
+
 /// @brief Function prototypes: MUST be specified BEFORE including TaskScheduler.h
 void initESPNOW();
 void initWiFi();
@@ -438,6 +440,8 @@ void requestPairing()
   if (!rememberPeer(broadcastAddress, false))
   {
     _PL("ERROR: requestPairing() -> rememberPeer() failed");
+
+    return;
   }
 
   struct_payload_t payLoad = {0, 0, 0};
@@ -445,6 +449,8 @@ void requestPairing()
   if (!sendMessage(broadcastAddress, pairingRequest, payLoad))
   {
     _PL("ERROR: requestPairing() -> sendMessage() failed");
+
+    return;
   }
   else
   {
@@ -457,6 +463,8 @@ void requestPairing()
   if (!forgetPeer(broadcastAddress))
   {
     _PL("ERROR: requestPairing() -> forgetPeer() failed");
+
+    return;
   }
 }
 
@@ -469,6 +477,8 @@ void validatePairing(uint8_t *senderMac, struct_message_t message)
   if (!rememberPeer(senderMac, false))
   {
     _PL("ERROR: validatePairing() -> rememberPeer() failed");
+
+    return;
   }
 
   struct_payload_t payLoad = {0, 0, 0};
@@ -476,7 +486,9 @@ void validatePairing(uint8_t *senderMac, struct_message_t message)
   if (!sendMessage(senderMac, pairingValidation, payLoad))
   {
     _PL("ERROR: validatePairing() -> sendMessage() failed");
-  }
+  
+    return;
+}
   else
   {
     if (KEY_AUTH)
@@ -484,6 +496,8 @@ void validatePairing(uint8_t *senderMac, struct_message_t message)
       if (!updatePeerEncryption(senderMac, KEY_AUTH))
       {
         _PL("ERROR: validatePairing() -> updatePeerEncryption() failed");
+
+        return;
       }
     }
   }
@@ -498,6 +512,8 @@ void confirmPairing(uint8_t *senderMac, struct_message_t message)
   if (!rememberPeer(senderMac, KEY_AUTH))
   {
     _PL("ERROR: confirmPairing() -> rememberPeer() failed");
+
+    return;
   }
 
   struct_payload_t payLoad = {0, 0, 0};
@@ -511,7 +527,11 @@ void confirmPairing(uint8_t *senderMac, struct_message_t message)
     if (!forgetPeer(senderMac))
     {
       _PL("ERROR: confirmPairing() -> !sendMessage() -> forgetPeer() failed");
+
+      return;
     }
+
+    return;
   }
 }
 
@@ -530,7 +550,11 @@ void welcomePeer(uint8_t *senderMac, struct_message_t message)
     if (!forgetPeer(senderMac))
     {
       _PL("ERROR: welcomePeer() -> !sendMessage() -> forgetPeer() failed");
+
+      return;
     }
+
+    return;
   }
   else
   {
@@ -600,6 +624,8 @@ void finalizePairing(uint8_t *senderMac, struct_message_t message)
   if (thisDevice.device_MODE != PAIRED)
   {
     thisDevice.device_MODE = PAIRED;
+
+    firstPeer = true;
   }
 
   prefs.putUInt("deviceMode", thisDevice.device_MODE);
@@ -619,11 +645,13 @@ void updateTaskRunner()
     requestPairing_TASK.disable();
   }
 
-  if (thisDevice.device_ROLE == CONTROLLER)
+  if (thisDevice.device_ROLE == CONTROLLER  && firstPeer)
   {
     runner.addTask(requestBatteryStatus_TASK);
 
     requestBatteryStatus_TASK.enable();
+
+    firstPeer = false;
   }
 
   if (thisDevice.device_ROLE == SENSOR)
@@ -786,6 +814,7 @@ bool sendMessage(uint8_t *targetMacAddress, messageTopic topic, struct_payload_t
     _PP(topic);
     _PP(" was NOT sent to MAC:");
     printMAC(targetMacAddress);
+    
     handleErrorESPNOW(status);
   }
   else
