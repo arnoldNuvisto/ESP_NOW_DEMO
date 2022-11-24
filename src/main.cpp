@@ -31,6 +31,7 @@
 // #define _SECURE_
 // #define _RESET_NVM_
 // #define _RETAIN_MSG_
+#define DEVICE_ID 1111
 
 /// @brief Build configuration
 enum deviceType
@@ -64,18 +65,16 @@ enum deviceMode
 #define MAX_PEERS 1
 #endif
 
+uint16_t device_ID = DEVICE_ID;
+uint8_t device_MODE = NOT_PAIRED;
+uint8_t device_PEERS = 0;
+
 #ifdef _HUB_
-uint16_t device_ID = 1111;
 uint8_t device_TYPE = HUB;
 uint8_t device_ROLE = CONTROLLER;
-uint8_t device_MODE = NOT_PAIRED;
-uint8_t device_PEERS = 0;
 #else
-uint16_t device_ID = 5555;
 uint8_t device_TYPE = NODE;
 uint8_t device_ROLE = SENSOR;
-uint8_t device_MODE = NOT_PAIRED;
-uint8_t device_PEERS = 0;
 #endif
 
 #ifdef _SECURE_
